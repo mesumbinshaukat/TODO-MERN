@@ -2,12 +2,6 @@ const todoUserModel = require('../Models/todo_user')
 const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 
-// METHOD: GET
-// ROUTE: /
-const getAllUsers = async (req, res) => {
-    return res.status(200).json({ message: 'All Users' })
-}
-
 // METHOD: POST
 // ROUTE: api/v2/register
 const insertUser = async (req, res) => {
@@ -61,5 +55,5 @@ const insertUser = async (req, res) => {
 
 
 module.exports = {
-    getAllUsers, insertUser
+    insertUser
 }

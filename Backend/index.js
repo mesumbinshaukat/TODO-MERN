@@ -18,26 +18,26 @@ const dotenv = require('dotenv').config()
 const db = require('./Config/db_config')
 
 // Neeche meine Controllers Import Kiye Hain
-const {insertUser, getAllUsers} = require('./Controllers/Controller_User')
+const {insertUser} = require('./Controllers/Controller_User')
 
 //  Yahan frontend ke liye meine cors define kia hai, jiska port 5173 hai default
 // Mazeed maloomat ke liye mjhse rabta karain ;)
-// const corsOptions = {
-//     origin: 'http://localhost:5173/',
-//     credentials: true,
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-// }
+const corsOptions = {
+    origin: 'http://localhost:5173/',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}
 
-// // Backend pe meine cors ko enable kia hai
-// app.use(cors(corsOptions))
+// Backend pe meine cors ko enable kia hai
+app.use(cors(corsOptions))
 
 // Backend pe body parser ko enable kia hai
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))  
 
 // Neeche User Ke Liye Routes Hain ->
-app.post('/api/v2/register', insertUser).get('/', getAllUsers)
+app.post('/api/v2/register', insertUser)
 
 // Agar se .env wali file mein port define nhi hai ya .env file hee nhi hai toh default port 3000 pe listen karega mera backend
 const port = process.env.PORT ?? 3000
