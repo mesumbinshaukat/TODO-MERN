@@ -53,7 +53,33 @@ const insertUser = async (req, res) => {
     }
 }
 
+// METHOD: POST
+// ROUTE: api/v2/login
+const checkUser = async (req, res) => {
+    try {
+        const { user_email, user_password } = req.body
+        const user = await todoUserModel.findOne({ user_email: user_email })
+        if (user) {
+            const result = await bcryptjs.compare(user_password, user.user_password)
+            if (result) {
+                const token = jwt.sign({ user_id: user._id }, process.env.PRIVATE_KEY)
+                return res.status(200).json({ message: 'User logged in successfully', token, user_id: user._id })
+            }
+            else {
+                return res.status(400).json({ message: 'User login failed' })
+            }
+        }
+        else {
+            return res.status(400).json({ message: 'User login failed' })
+        }
+}
+
+    catch (error) {
+        console.log("CATCH Error: ", error)
+        res.status(500).json({ message: error.message })
+    }
+}
 
 module.exports = {
-    insertUser
+    insertUser, checkUser
 }
