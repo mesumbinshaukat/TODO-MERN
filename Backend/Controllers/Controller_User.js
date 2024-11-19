@@ -63,7 +63,7 @@ const checkUser = async (req, res) => {
             const result = await bcryptjs.compare(user_password, user.user_password)
             if (result) {
                 const token = jwt.sign({ user_id: user._id }, process.env.PRIVATE_KEY)
-                return res.status(200).json({ message: 'User logged in successfully', token, user_id: user._id })
+                return res.status(200).json({ message: 'User logged in successfully', token, user_id: user._id, user_name: user.user_name })
             }
             else {
                 return res.status(400).json({ message: 'User login failed' })

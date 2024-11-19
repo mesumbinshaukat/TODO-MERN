@@ -1,7 +1,10 @@
 import React from 'react'
 import {Link, NavLink} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+  const redirect = useNavigate()
+  const token = localStorage.getItem('token')
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
@@ -14,22 +17,34 @@ function Header() {
         <li className="nav-item">
          <NavLink className="nav-link" to="/">Home</NavLink>
         </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/login">Login</NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/register">Register</NavLink>
-        </li>
-        <li className="nav-item">
+       
+       {token ? (
+        <>
+      <li className="nav-item">
           <NavLink className="nav-link" to="/todo">Todo</NavLink>
         </li>
         <li className="nav-item">
           <NavLink className="nav-link" to="/profile">profile</NavLink>
         </li>
         <li className="nav-item">
-          <NavLink className="nav-link" to="/logout">Logout</NavLink>
+         <button className='btn btn-danger text-right' type="button" onClick={() => {
+          localStorage.removeItem('token')
+          redirect('/login')
+         }}>Logout</button>
+        </li>
+        </>
+       ) : (
+        <>
+         <li className="nav-item">
+          <NavLink className="nav-link" to="/login">Login</NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/register">Register</NavLink>
         </li>
       
+        </>
+)}
+       
       </ul>
      
     </div>

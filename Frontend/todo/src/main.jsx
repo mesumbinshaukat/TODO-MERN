@@ -5,14 +5,27 @@ import Register from './Pages/Register.jsx'
 import Login from './Pages/Login.jsx'
 import App from './App.jsx'
 import Home from './Pages/Home'
+import Todo from './Pages/Todo'
+import Profile from './Pages/Profile'
 
-// ROUTING WITH PROTECTED ROUTES
+const token = localStorage.getItem('token')
+
+// Idhar protected routes lagaye huewe hain. Aur ./Components/Header/Header.jsx mein bhi check horaha hai navbar pe.
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
       <Route index element={<Home/>}/>
-      <Route path='register' element={<Register/>}/>
-      <Route path='login' element={<Login/>}/>
+      {token ? (
+        <>
+        <Route path='todo' element={<Todo/>}/>
+        <Route path='profile' element={<Profile/>}/>
+      </>) : (
+        
+        <>
+        <Route path='register' element={<Register/>}/>
+        <Route path='login' element={<Login/>}/>
+      </>
+      )}
       <Route path='*' element={<h1>404 Page Not Found</h1>}/>
     </Route>
   )

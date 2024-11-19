@@ -1,18 +1,14 @@
 import {useState} from 'react'
 import axios from 'axios'
-import {Navigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
 
-    if(localStorage.getItem('token'))
-    {
-        return <Navigate to='/'/>
-    }
-
+  
   const [user_email, setUserEmail] = useState({})
   const [user_password, setUserPassword] = useState({})
- 
-
+  
+  const redirect = useNavigate()
   
   const handleSubmit = async (e) => {
       e.preventDefault()
@@ -34,7 +30,11 @@ const Login = () => {
       const {token} = response.data 
       console.log(token)
       console.log(localStorage.setItem('token', token))
-      console.log(token_set)
+      
+      if(token)
+        {
+          redirect('/')
+        }
     }
     catch(error)
     {
