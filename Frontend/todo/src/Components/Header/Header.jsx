@@ -2,9 +2,8 @@ import React from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
-function Header() {
+function Header({token, setToken}) {
   const redirect = useNavigate()
-  const token = localStorage.getItem('token')
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
@@ -28,7 +27,7 @@ function Header() {
         </li>
         <li className="nav-item">
          <button className='btn btn-danger text-right' type="button" onClick={() => {
-          localStorage.removeItem('token')
+          setToken(null)
           redirect('/login')
          }}>Logout</button>
         </li>
